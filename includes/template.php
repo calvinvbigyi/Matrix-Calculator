@@ -32,6 +32,8 @@ and open the template in the editor.
                 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
                 <script src="/js/Matrix.js" ></script>
             </div>
+            <div id="result">
+            </div>
             <footer>
                 <p>All rights reserved.</p>
             </footer>
