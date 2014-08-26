@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 function addition(){
     return 1+2;
 }
@@ -22,7 +22,7 @@ function addORSub(operation, matrix1, matrix2){
             if(col1 === col2){
                 for(var i = 0; i < matrix1.length; i++){
                     for(var j = 0; j < matrix1[i].length; j++){
-                        if(operation === "addtion"){
+                        if(operation === "addition"){
                             matrixR[i][j] = matrix1[i][j] + matrrix2[i][j];
                         }else if(operation === "substraction"){
                             matrixR[i][j] = matrix1[i][j] - matrix2[i][j];
@@ -88,8 +88,8 @@ function determinant(matrix){
     }
         return;
 }
-=======
+
 var Matrix = function(){
-    
+
 }
->>>>>>> FETCH_HEAD
+
