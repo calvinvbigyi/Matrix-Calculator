@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function addition(){
     return 1+2;
 }
@@ -87,3 +88,8 @@ function determinant(matrix){
     }
         return;
 }
+=======
+var Matrix = function(){
+    
+}
+>>>>>>> FETCH_HEAD
