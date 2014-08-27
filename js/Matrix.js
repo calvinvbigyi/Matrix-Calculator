@@ -1,16 +1,45 @@
+var data;
+var matrix;
 
-function addition(){
-    return 1+2;
-}
-document.getElementById('res').innerHTML = 12;
 
 function validate(matrix){
-    var col = matrix[0].length;
-    for(var i = 1; i < matrix.length; i++){
-        if(matrix[i].length !== col)
-            return false;
+    if (matrix != null){
+        if (matrix instanceof Array){
+            var col = matrix[0].length;
+            for (var i = 0; i < col; i++){
+                if (matrix[i] instanceof Array){
+                    if (matrix[i].length == col){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                else{
+                    throw new MatrixFormatException(matrix);
+                }
+            }
+        }
+        else{
+            throw new MatrixFormatException(matrix);
+        }
+    }else{
+        return zeroMatrix(0);
     }
-    return true;
+}
+
+function zeroMatrix(n){
+    var matrix;
+    for (var i = 0; i < n; i++){
+        for (var j = 0; j < n; j++){
+            matrix[i][j] = 0;
+        }
+    }
+    return matrix;
+}
+
+function MatrixFormatException(matrix){
+    return matrix + "does not have a proper matrix format."
 }
 
 function addORSub(operation, matrix1, matrix2){
@@ -88,8 +117,3 @@ function determinant(matrix){
     }
         return;
 }
-
-var Matrix = function(){
-
-}
-
