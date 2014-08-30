@@ -2,6 +2,7 @@ var data;
 var matrix;
 
 
+//Validate each matrix by identifying its data type and whether col == row 
 function validate(matrix){
     if (matrix != null){
         if (matrix instanceof Array){
@@ -28,11 +29,28 @@ function validate(matrix){
     }
 }
 
+//Create a n*n zero matrix
 function zeroMatrix(n){
-    var matrix;
+    var matrix = [];
     for (var i = 0; i < n; i++){
         for (var j = 0; j < n; j++){
             matrix[i][j] = 0;
+        }
+    }
+    return matrix;
+}
+
+//Create a n*n identity matrix
+function identityMatrix(n){
+    var matrix = [];
+    for (var i = 0; i < n; i++){
+        for (var j = 0; j < n; j++){
+            if ((i+j) %2 == 0){
+                matrix[i][j] = 1;
+            }
+            else {
+                matrix[i][j] = 0;
+            }
         }
     }
     return matrix;
@@ -44,15 +62,15 @@ function MatrixFormatException(matrix){
 
 function addORSub(operation, matrix1, matrix2){
     if(validate(matrix1) && validate(matrix2)){
-        if(maxtrix1.length === matrix2.length){
-            var matrixR = new Array();
+        if(matrix1.length === matrix2.length){
+            var matrixR = [];
             var col1 = matrix1[0].length;
             var col2 = matrix2[0].length;
             if(col1 === col2){
                 for(var i = 0; i < matrix1.length; i++){
                     for(var j = 0; j < matrix1[i].length; j++){
                         if(operation === "addition"){
-                            matrixR[i][j] = matrix1[i][j] + matrrix2[i][j];
+                            matrixR[i][j] = matrix1[i][j] + matrix2[i][j];
                         }else if(operation === "substraction"){
                             matrixR[i][j] = matrix1[i][j] - matrix2[i][j];
                         }
@@ -70,9 +88,11 @@ function multiplication(matrix1, matrix2){
     if(validate(matrix1) && validate(matrix2)){
         var col1 = matrix1[0].length;
         var col2 = matrix2[0].length;
-        if(col1 === matrix2.length){
+        var row1 = matrix1.length;
+        var row2 = matrix2.length;
+        if(col1 === row2){
             var matrixR;
-            for(var i = 0; i < matrix1.length; i++){
+            for(var i = 0; i < row1; i++){
                 for(var j = 0; j < col2; j++){
                     for(var k = 0; k < matrix1[i].length; k++){
                         var result = 0;
@@ -84,7 +104,9 @@ function multiplication(matrix1, matrix2){
             }
             return matrixR;
         }
-        return;
+        else {
+            return;
+        }
     }
 }
 
@@ -108,12 +130,37 @@ function transpose(matrix){
         }
     }
 }
+
+//deternimant can only be calculated for square matrix;
 function determinant(matrix){
     if(validate(matrix)){
-        if(matrix.length === matrix[0].length){
-            
+        var det = 0;
+        var col = matrix[0].length;
+        var row = matrix.length;
+        var mirrorMatrix = [];
+        if (col != row){
+            return "Sorry, please enter a square matrix."
         }
-            return;
+        else{
+            if (col == 1){
+                return matrix[0][0];
+            }
+            else if (col == 2){
+                return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
+            }
+            else if (col > 2){
+                for (var primary_col = 0; primary_col < col; primary_col++){
+                    for (var j = 1; j < row; j++){
+                        mirrorMatrix[j-1][primary_col] = matrix[j][primary_col+1];
+                        det += matrix[0][primary_col] * Math.pow(-1,primary_col) * determinant(mirrorMatrix);
+                    }
+                }
+            }
+        }
+        return det;
     }
-        return;
+}
+
+function inverse(matrix){
+    
 }
