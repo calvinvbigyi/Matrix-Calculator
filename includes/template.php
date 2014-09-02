@@ -15,7 +15,8 @@
             </div>
             <div id="content_area">
                   <form method="post" action="index.php">
-                    <textarea id="result_matrix" name="result_matrix"></textarea>
+                    <textarea id="result_matrix" name="result_matrix"></textarea><br></br>
+                    <>
                     <input type="submit" name="submit" value="Calculate Now!" id="submit"/>
                   </form>
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>                

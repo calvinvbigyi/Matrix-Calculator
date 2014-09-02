@@ -3,7 +3,12 @@
     
     $content = "Please enter your matrix";
     
-    $resultMatirx = htmlspecialchars($_POST['result_matrix']);
+    if (isset($_POST['result_matrix'])){
+        $resultMatirx = htmlspecialchars($_POST['result_matrix']);
+    }
+    else{
+        $resultMatrix = null;
+    }
     
     include '/includes/template.php';
 ?>
