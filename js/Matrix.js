@@ -146,18 +146,18 @@ function determinant(matrix){
             }
             else if (col > 1){
                 for (var primary_col = 0; primary_col < col; primary_col++){
-                    var mirrorMatrix = [];
+                    var mirror_matrix= [];
                     for (var j = 1; j < row; j++){
                         for (var i = 0; i < col; i++){
                             if (i < primary_col)
-                                mirrorMatrix[j-1][i] = matrix[j][i];
+                                mirror_matrix[j-1][i] = matrix[j][i];
                             else if (i > primary_col)
-                                mirrorMatrix[j-1][i-1] = matrix[j][i];
+                                mirror_matrix[j-1][i-1] = matrix[j][i];
                             else if (i == primary_col)
                                 continue;
                         }
                     }
-                    det += matrix[0][primary_col] * Math.pow(-1, primary_col) * determinant(mirrorMatrix);
+                    det += matrix[0][primary_col] * Math.pow(-1, primary_col) * determinant(mirror_matrix);
                 }
             }
         }
@@ -167,7 +167,9 @@ function determinant(matrix){
 
 function inverse(matrix){
     if (validate(matrix)){
-
+        if (determinant(matrix) != 0){
+            
+        }
     }
 }
 
@@ -179,11 +181,14 @@ function cofactor(matrix){
         for(var primary_row = 0; primary_row < row; primary_row++){
             for(var primary_col = 0; primary_col < col; primary_col++){
                 var mirror_matrix = [];
-                for (var j = 0; j < row; j++){
-                    for (var i = 0; i < col; i++){
+                for(var j = 0; j < row; j++){
+                    for(var i = 0; i < col; i++){
                         if(j == primary_row || i == primary_col)
                             continue;
-                        //mirror_matrix[][i] = matrix[j+1][]
+                        else if(j > primary_row && i > primary_col)
+                            mirror_matrix[j-1][i-1] = matrix[j][i]
+                        else if(j < primary_row && i > primary_col)
+                            mirror_matrix[j][i-1] = matrix[j][]
                     }
                 }
             }
