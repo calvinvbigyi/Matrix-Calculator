@@ -64,10 +64,11 @@ function addORSub(operation, matrix1, matrix2){
     if(validate(matrix1) && validate(matrix2)){
         if(matrix1.length === matrix2.length){
             var matrixR = [];
+            var row1 = matrix1.length;
             var col1 = matrix1[0].length;
             var col2 = matrix2[0].length;
             if(col1 === col2){
-                for(var i = 0; i < matrix1.length; i++){
+                for(var i = 0; i < row1; i++){
                     for(var j = 0; j < matrix1[i].length; j++){
                         if(operation === "addition"){
                             matrixR[i][j] = matrix1[i][j] + matrix2[i][j];
@@ -104,9 +105,6 @@ function multiplication(matrix1, matrix2){
             }
             return matrixR;
         }
-        else {
-            return;
-        }
     }
 }
 
@@ -128,16 +126,17 @@ function transpose(matrix){
                 matrixR[j][i] = matrix[i][j];
             }
         }
+        return matrixR;
     }
 }
 
 //deternimant can only be calculated for square matrix;
+//Check if it works right now.
 function determinant(matrix){
     if(validate(matrix)){
         var det = 0;
         var col = matrix[0].length;
         var row = matrix.length;
-        var mirrorMatrix = [];
         if (col != row){
             return "Sorry, please enter a square matrix."
         }
@@ -145,15 +144,20 @@ function determinant(matrix){
             if (col == 1){
                 return matrix[0][0];
             }
-            else if (col == 2){
-                return matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
-            }
-            else if (col > 2){
+            else if (col > 1){
                 for (var primary_col = 0; primary_col < col; primary_col++){
+                    var mirrorMatrix = [];
                     for (var j = 1; j < row; j++){
-                        mirrorMatrix[j-1][primary_col] = matrix[j][primary_col+1];
-                        det += matrix[0][primary_col] * Math.pow(-1,primary_col) * determinant(mirrorMatrix);
+                        for (var i = 0; i < col; i++){
+                            if (i < primary_col)
+                                mirrorMatrix[j-1][i] = matrix[j][i];
+                            else if (i > primary_col)
+                                mirrorMatrix[j-1][i-1] = matrix[j][i];
+                            else if (i == primary_col)
+                                continue;
+                        }
                     }
+                    det += matrix[0][primary_col] * Math.pow(-1, primary_col) * determinant(mirrorMatrix);
                 }
             }
         }
@@ -162,5 +166,27 @@ function determinant(matrix){
 }
 
 function inverse(matrix){
-    
+    if (validate(matrix)){
+
+    }
+}
+
+function cofactor(matrix){
+    if (validate(matrix)){
+        var row = matrix.length;
+        var col = matrix[0].length;
+        var result = [];
+        for(var primary_row = 0; primary_row < row; primary_row++){
+            for(var primary_col = 0; primary_col < col; primary_col++){
+                var mirror_matrix = [];
+                for (var j = 0; j < row; j++){
+                    for (var i = 0; i < col; i++){
+                        if(j == primary_row || i == primary_col)
+                            continue;
+                        //mirror_matrix[][i] = matrix[j+1][]
+                    }
+                }
+            }
+        }
+    }
 }
