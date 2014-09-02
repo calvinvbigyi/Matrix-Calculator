@@ -2,6 +2,7 @@ var data;
 var matrix;
 
 
+
 //Validate each matrix by identifying its data type and whether col == row 
 function validate(matrix){
     if (matrix != null){
