@@ -188,7 +188,6 @@ function cofactor(matrix){
                         else if(j > primary_row && i > primary_col)
                             mirror_matrix[j-1][i-1] = matrix[j][i]
                         else if(j < primary_row && i > primary_col)
-                            mirror_matrix[j][i-1] = matrix[j][]
                     }
                 }
             }

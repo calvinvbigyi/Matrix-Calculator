@@ -13,13 +13,6 @@ and open the template in the editor.
     <body>
         <div id="wrapper">
             
-            <nav id="nav">
-                <ul>
-                    <li><a href="index.php">Home</li>
-                    <li><a href="#">Brief introduction</li>
-                    <li><a href="#">Author</li>
-                </ul>
-            </nav>
             <div id="content">
                 <?php
                    echo $content;
@@ -27,7 +20,7 @@ and open the template in the editor.
                
             </div>
             <div id="content_area">
-                <input id="matrix" />
+                <textarea id="matrix"></textarea>
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>                
                 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
                 <script src="/js/Matrix.js" ></script>
