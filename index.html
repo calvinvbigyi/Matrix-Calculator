@@ -1,15 +1,18 @@
+<!DOCTYPE html>
 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Matrix-Calculator</title>
-        <link rel="stylesheet" type="text/css" href="/css/StyleSheet.css"></link>
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" href="/css/StyleSheet.css" />
     </head>
     <body>
         <div id="wrapper">
             
             <div id="content">
-                
+                <?php
+                   echo $content;
+                ?>
             </div>
             <div id="content_area">
                   <form method="post" action="index.php">
@@ -25,7 +28,9 @@
                 <br></br>
                 <div id="res">
                     <p id="render">
-                        
+                        <?php
+                            echo $resultMatrix;
+                        ?>
                     </p>
                 </div>
             </div>
