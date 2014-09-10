@@ -1,6 +1,21 @@
 var data;
 var matrix;
 
+$("#matrix_form").submit(function(event) {
+    event.preventDefault();
+    var matrixString = $("#result_matrix").val();
+    var matrix = matrixString.split("\n");
+    var j = 0;
+    for (var i = 0; i < matrix.length; i++){
+        if (matrix[j] != undefined && matrix[j] != null){
+            matrix[j] = matrix[j].split(" ");
+            j++;
+        }
+    }
+    if ($("#det").is(":checked")){
+        $("span").text(determinant(matrix)).show();
+    }
+});
 
 
 //Validate each matrix by identifying its data type and whether col == row 
@@ -145,26 +160,31 @@ function determinant(matrix){
             if (col == 1){
                 return matrix[0][0];
             }
-            else if (col > 1){
+            if (col == 2){
+                return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+            }
+            else if (col > 2){
                 for (var primary_col = 0; primary_col < col; primary_col++){
+                    var i = 0;
                     var mirror_matrix= [];
                     for (var j = 1; j < row; j++){
-                        for (var i = 0; i < col; i++){
-                            if (i < primary_col)
-                                mirror_matrix[j-1][i] = matrix[j][i];
-                            else if (i > primary_col)
-                                mirror_matrix[j-1][i-1] = matrix[j][i];
-                            else if (i == primary_col)
-                                continue;
-                        }
+                        if (i < primary_col)
+                            mirror_matrix[j-1][i] = matrix[j][i];
+                        else if (i > primary_col)
+                            mirror_matrix[j-1][i-1] = matrix[j][i];
+                        else if (i == primary_col)
+                            continue;
+                        i++;
+                        console.log(j, i,primary_col);
                     }
                     det += matrix[0][primary_col] * Math.pow(-1, primary_col) * determinant(mirror_matrix);
                 }
             }
-        }
-        return det;
+         }
     }
+    return det;
 }
+
 
 function inverse(matrix){
     if (validate(matrix)){
@@ -188,7 +208,9 @@ function cofactor(matrix){
                             continue;
                         else if(j > primary_row && i > primary_col)
                             mirror_matrix[j-1][i-1] = matrix[j][i]
-                        else if(j < primary_row && i > primary_col)
+                        else if(j < primary_row && i > primary_col){
+                            
+                        }
                     }
                 }
             }
