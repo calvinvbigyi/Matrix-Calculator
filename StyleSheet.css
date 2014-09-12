@@ -32,8 +32,13 @@ body p
 
 #result_matrix
 {
+<<<<<<< HEAD
     width: 400px;
     height: 400px;
+=======
+    width: 700px;
+    height: 700px;
+>>>>>>> 8dc099c073076cb2866c1050bb4196c40d5b0c9c
     
 }
 
