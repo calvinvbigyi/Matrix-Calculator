@@ -16,9 +16,12 @@
             <div id="content_area">
                   <form method="post" id="matrix_form" action="index.php">
                     <textarea id="result_matrix" name="result_matrix"></textarea><br></br>
-                    <input type="radio" name="matrix_f" value="det" id="det"> Calculate the Determinant of the matrix <br>
-                    <input type="radio" name="matrix_f" value="add" id="add"> Calculate the sum of two matrixes<br>
-                    <input type="radio" name="matrix_f" value="sub" id="sub"> Calculate one matrix subtracts another matrix<br></br>
+                    <input type="radio" name="matrix_f" value="det" id="det"> Get the Determinant <br>
+                    <input type="radio" name="matrix_f" value="inv" id="inv"> Get the Inverse Matrix<br>
+                    <input type="radio" name="matrix_f" value="add" id="add"> Get the Sum Matrix<br>
+                    <input type="radio" name="matrix_f" value="sub" id="sub"> Get the Substract Matrix<br>
+                    <input type="radio" mane="matrix_f" value="mul" id="mul"> Get the Multiplication Matrix<br>
+                    <input type="radio" mane="matrix_f" value="div" id="div"> Get the Division Matrix<br></br>
                     <input type="submit" name="submit" value="Calculate Now!" id="submit"/>
                   </form>
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>                
