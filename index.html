@@ -8,12 +8,9 @@
     </head>
     <body>
         <div id="wrapper">
-            
-            <div id="content">
-               
-            </div>
+            <h id="title"> Matrix Calculator </h>
             <div id="content_area">
-                 <form method="post" id="matrix_form" action="index.php">
+                <form method="post" id="matrix_form" action="index.php">
                     <textarea id="result_matrix" name="result_matrix"></textarea><br></br>
                     <input type="radio" name="matrix_f" value="det" id="det"> Get the Determinant <br>
                     <input type="radio" name="matrix_f" value="inv" id="inv"> Get the Inverse Matrix<br>
@@ -22,7 +19,7 @@
                     <input type="radio" mane="matrix_f" value="mul" id="mul"> Get the Multiplication Matrix<br>
                     <input type="radio" mane="matrix_f" value="div" id="div"> Get the Division Matrix<br></br>
                     <input type="submit" name="submit" value="Calculate Now!" id="submit"/>
-                  </form>
+                </form>
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>               
                 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
                 <script src="Matrix.js" ></script>
