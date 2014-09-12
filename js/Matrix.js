@@ -1,6 +1,20 @@
-var data;
-var matrix;
+$(document).ready(function(){
 
+$("#matrix_form").submit(function(event) {
+    event.preventDefault();
+    var matrixString = $("#result_matrix").val();
+    var matrixR = matrixString.split("\n");
+    var j = 0;
+    for (var i = 0; i < matrixR.length; i++){
+        if (matrixR[j] != undefined && matrixR[j] != null){
+            matrixR[j] = matrixR[j].split(" ");
+            j++;
+        }
+    }
+    if ($("#det").is(":checked")){
+        $("span").text(determinant(matrixR)).show();
+    }
+});
 
 
 //Validate each matrix by identifying its data type and whether col == row 
@@ -135,36 +149,46 @@ function transpose(matrix){
 //Check if it works right now.
 function determinant(matrix){
     if(validate(matrix)){
-        var det = 0;
         var col = matrix[0].length;
         var row = matrix.length;
+        console.log(matrix[0].length);
         if (col != row){
-            return "Sorry, please enter a square matrix."
+            return "Please enter a squre matrix."
         }
         else{
             if (col == 1){
-                return matrix[0][0];
+                return matrix[0][0]
             }
-            else if (col > 1){
-                for (var primary_col = 0; primary_col < col; primary_col++){
-                    var mirror_matrix= [];
-                    for (var j = 1; j < row; j++){
-                        for (var i = 0; i < col; i++){
-                            if (i < primary_col)
-                                mirror_matrix[j-1][i] = matrix[j][i];
-                            else if (i > primary_col)
-                                mirror_matrix[j-1][i-1] = matrix[j][i];
-                            else if (i == primary_col)
-                                continue;
+            if (col == 2){
+                console.log("checked");
+                return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+            }
+            var det = 0;
+            for (var primary_col = 0; primary_col < col; primary_col++){
+                var mirror_matrix = new Array(col - 1);
+                for (var e = 0; e < mirror_matrix.length; e++){
+                    mirror_matrix[e] = new Array(col - 1);
+                }
+                for (var j = 1; j < col; j++){
+                    for(var i = 0; i < col; i++){
+                        if(i < primary_col){
+                            mirror_matrix[j-1][i] = matrix[j][i];
+                        }
+                        else if(i > primary_col){
+                            mirror_matrix[j-1][i-1] = matrix[j][i];
                         }
                     }
-                    det += matrix[0][primary_col] * Math.pow(-1, primary_col) * determinant(mirror_matrix);
                 }
+                det += matrix[0][primary_col] * Math.pow(-1, primary_col) * determinant(mirror_matrix);
+                console.log("inloop",det);  
             }
-        }
-        return det;
+            console.log("outloop",det);
+            return det;
+        }  
+
     }
 }
+
 
 function inverse(matrix){
     if (validate(matrix)){
@@ -188,10 +212,13 @@ function cofactor(matrix){
                             continue;
                         else if(j > primary_row && i > primary_col)
                             mirror_matrix[j-1][i-1] = matrix[j][i]
-                        else if(j < primary_row && i > primary_col)
+                        else if(j < primary_row && i > primary_col){
+                            
+                        }
                     }
                 }
             }
         }
     }
 }
+});
