@@ -5,26 +5,42 @@ $("#matrix_form").submit(function(event) {
     var matrixString = $("#result_matrix").val();
     var matrixR = matrixString.split("\n");
     var j = 0;
-    for (var i = 0; i < matrixR.length; i++){
-        if (matrixR[j] != undefined && matrixR[j] != null){
+    for (var i = 0; i < matrixR.length; i++) {
+        if (matrixR[j] != undefined && matrixR[j] != null) {
             matrixR[j] = matrixR[j].split(" ");
             j++;
         }
     }
-    if ($("#det").is(":checked")){
+    
+    if ($("#det").is(":checked")) {
         $("span").text(determinant(matrixR)).show();
     }
+    if ($("#inv").is(":checked")) {
+        // var inverseMatrix = inverse(matrixR);
+        // var row = inverseMatrix.length;
+        // for (var j = 0; j < row; j++){
+        //     for (var i = 0; i < row; i++){
+        //         $("span").text(inverserMatrix[j][i].show());
+        //     }
+        // }
+        for (var j = 0; j < matrixR.length; j++) {
+            for (var i = 0; i < matrixR[0].length; i++) {
+                console.log(inverse(matrixR));
+            }
+        }
+    }
+   
 });
 
 
 //Validate each matrix by identifying its data type and whether col == row 
-function validate(matrix){
-    if (matrix != null){
-        if (matrix instanceof Array){
+function validate(matrix) {
+    if (matrix != null) {
+        if (matrix instanceof Array) {
             var col = matrix[0].length;
-            for (var i = 0; i < col; i++){
-                if (matrix[i] instanceof Array){
-                    if (matrix[i].length == col){
+            for (var i = 0; i < col; i++) {
+                if (matrix[i] instanceof Array) {
+                    if (matrix[i].length == col) {
                         return true;
                     }
                     else{
@@ -36,10 +52,11 @@ function validate(matrix){
                 }
             }
         }
-        else{
+        else {
             throw new MatrixFormatException(matrix);
         }
-    }else{
+    }
+    else {
         return zeroMatrix(0);
     }
 }
@@ -135,9 +152,14 @@ function division(matrix1, matrix2){
 
 function transpose(matrix){
     if(validate(matrix)){
-        var matrixR;
-        for(var i = 0; i < matrix.length; i++){
-            for(var j = 0; j < matrix[i].length; j++){
+        var row = matrix.length;
+        var col = matrix[0].length;
+        var matrixR = new Array(row);
+        for (var i = 0; i < row; i++) {
+            matrixR[i] = new Array(row);
+        }
+        for(var j = 0; j < row; j++){
+            for(var i = 0; i < col; i++){
                 matrixR[j][i] = matrix[i][j];
             }
         }
@@ -151,7 +173,6 @@ function determinant(matrix){
     if(validate(matrix)){
         var col = matrix[0].length;
         var row = matrix.length;
-        console.log(matrix[0].length);
         if (col != row){
             return "Please enter a squre matrix."
         }
@@ -160,7 +181,6 @@ function determinant(matrix){
                 return matrix[0][0]
             }
             if (col == 2){
-                console.log("checked");
                 return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
             }
             var det = 0;
@@ -180,9 +200,7 @@ function determinant(matrix){
                     }
                 }
                 det += matrix[0][primary_col] * Math.pow(-1, primary_col) * determinant(mirror_matrix);
-                console.log("inloop",det);  
             }
-            console.log("outloop",det);
             return det;
         }  
 
@@ -192,8 +210,20 @@ function determinant(matrix){
 
 function inverse(matrix){
     if (validate(matrix)){
-        if (determinant(matrix) != 0){
-            
+        var row = matrix.length;
+        var col = matrix[0].length;
+        var result = new Array(row);
+        var det = determinant(matrix);
+        for (var i = 0; i < row; i++) {
+            result[i] = new Array(row);
+        }
+        if (det != 0 && (row == col)) {
+            for (var j = 0; j < row; j++) {
+                for (var i = 0; i < col; i++) {
+                    result[j][i] = transpose(cofactor(matrix))[j][i] / det; 
+                }
+            }
+        return result;   
         }
     }
 }
@@ -202,23 +232,61 @@ function cofactor(matrix){
     if (validate(matrix)){
         var row = matrix.length;
         var col = matrix[0].length;
-        var result = [];
-        for(var primary_row = 0; primary_row < row; primary_row++){
-            for(var primary_col = 0; primary_col < col; primary_col++){
-                var mirror_matrix = [];
-                for(var j = 0; j < row; j++){
-                    for(var i = 0; i < col; i++){
-                        if(j == primary_row || i == primary_col)
-                            continue;
-                        else if(j > primary_row && i > primary_col)
-                            mirror_matrix[j-1][i-1] = matrix[j][i]
-                        else if(j < primary_row && i > primary_col){
-                            
-                        }
+        if (row == col) {
+            var result = new Array(row);
+            for (var i = 0; i < row; i++) {
+               result[i] = new Array(row);
+            }
+            for(var primary_row = 0; primary_row < row; primary_row++){
+                for(var primary_col = 0; primary_col < col; primary_col++){
+                    result[primary_row][primary_col] = Math.pow(-1, (primary_row + primary_col)) * determinant(subMatrix(matrix, primary_row, primary_col));
+                }
+            }
+            return result;
+        }
+        
+    }   
+}
+
+function subMatrix(matrix, primary_col, primary_row) {
+    if (validate(matrix)) {
+        var row = matrix.length;
+        var col = matrix[0].length;
+        if (row == col) {
+            var sub_matrix = new Array(row);
+            for (var i = 0; i < row; i++) {
+                sub_matrix[i] = new Array(row);
+            }
+
+            for (var j = 0; j < row; j++) {
+                for (var i = 0; i < row; i++) {
+                    if ( j != primary_row && i != primary_col) {
+                        sub_matrix[j][i] = matrix[j][i];
+                    }
+                    else if ( j == primary_row || i == primary_col) {
+                        sub_matrix[j][i] = "null";
                     }
                 }
             }
+            
+            for (var j = 0; j < row; j++) {
+                for (var i = 0; i < row; i++) {
+                    if (sub_matrix[j][i] === "null") {
+                        sub_matrix[j].splice(i, 1);
+                    }
+                }
+            }
+            
+            for (var i = 0; i < row; i++) {
+                if (sub_matrix[i] != null) {
+                    if (sub_matrix[i].length == (row - 2)) {
+                        sub_matrix.splice(i, 1);
+                    }
+                } 
+            }
+            return sub_matrix;
         }
     }
 }
 });
+
