@@ -25,7 +25,7 @@ $("#matrix_form").submit(function(event) {
         // }
         for (var j = 0; j < matrixR.length; j++) {
             for (var i = 0; i < matrixR[0].length; i++) {
-                console.log(inverse(matrixR));
+                $("span").text(inverse(matrixR)).show();
             }
         }
     }
