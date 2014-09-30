@@ -239,6 +239,7 @@ function cofactor(matrix){
             }
             for(var primary_row = 0; primary_row < row; primary_row++){
                 for(var primary_col = 0; primary_col < col; primary_col++){
+                    console.log(subMatrix(matrix, primary_col, primary_row));
                     result[primary_row][primary_col] = Math.pow(-1, (primary_row + primary_col)) * determinant(subMatrix(matrix, primary_row, primary_col));
                 }
             }
@@ -276,14 +277,21 @@ function subMatrix(matrix, primary_col, primary_row) {
                     }
                 }
             }
-            
-            for (var i = 0; i < row; i++) {
+
+            for (var i = 0; i < sub_matrix.length; i++) {
                 if (sub_matrix[i] != null) {
                     if (sub_matrix[i].length == (row - 2)) {
                         sub_matrix.splice(i, 1);
                     }
+                    if (sub_matrix[0] == "null") {
+                        sub_matrix.splice(0, 1);
+                    }
+                    if (sub_matrix[1] == "null") {
+                        sub_matrix.splice(1, 1);
+                    }
                 } 
             }
+
             return sub_matrix;
         }
     }
