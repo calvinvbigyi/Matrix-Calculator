@@ -13,21 +13,10 @@ $("#matrix_form").submit(function(event) {
     }
     
     if ($("#det").is(":checked")) {
-        $("span").text(determinant(matrixR)).show();
+        $("#res").add("span").text(determinant(matrixR));
     }
     if ($("#inv").is(":checked")) {
-        // var inverseMatrix = inverse(matrixR);
-        // var row = inverseMatrix.length;
-        // for (var j = 0; j < row; j++){
-        //     for (var i = 0; i < row; i++){
-        //         $("span").text(inverserMatrix[j][i].show());
-        //     }
-        // }
-        for (var j = 0; j < matrixR.length; j++) {
-            for (var i = 0; i < matrixR[0].length; i++) {
-                $("span").text(inverse(matrixR)).show();
-            }
-        }
+        $("#res").add("span").text(inverse(matrixR));
     }
    
 });
@@ -291,6 +280,7 @@ function subMatrix(matrix, primary_col, primary_row) {
                     if (sub_matrix[i].length == (row - 2)) {
                         sub_matrix.splice(i, 1);
                     }
+                    // BUG FIX: FOR 2 * 2 matrix
                     if (sub_matrix[0] == "null") {
                         sub_matrix.splice(0, 1);
                     }
