@@ -214,16 +214,20 @@ function inverse(matrix){
         var col = matrix[0].length;
         var result = new Array(row);
         var det = determinant(matrix);
-        for (var i = 0; i < row; i++) {
-            result[i] = new Array(row);
-        }
-        if (det != 0 && (row == col)) {
+        if (det != 0) {
+            for (var i = 0; i < row; i++) {
+                result[i] = new Array(row);
+            }
+            if (det != 0 && (row == col)) {
             for (var j = 0; j < row; j++) {
                 for (var i = 0; i < col; i++) {
                     result[j][i] = transpose(cofactor(matrix))[j][i] / det; 
                 }
             }
-        return result;   
+            return result;   
+        }
+        else {
+            return "Inverse Matrix can't be singular. Please enter a matrix which has non 0 determinant."
         }
     }
 }
