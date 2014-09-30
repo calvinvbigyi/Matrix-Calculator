@@ -213,12 +213,16 @@ function inverse(matrix){
         var row = matrix.length;
         var col = matrix[0].length;
         var result = new Array(row);
-        var det = determinant(matrix);
-        if (det != 0) {
+        if (row == col) {
+            var det = determinant(matrix);
+        }
+        else {
+            return "Please enter a square matrix";
+        }
+        if (det != 0 && (row == col)) {
             for (var i = 0; i < row; i++) {
                 result[i] = new Array(row);
             }
-            if (det != 0 && (row == col)) {
             for (var j = 0; j < row; j++) {
                 for (var i = 0; i < col; i++) {
                     result[j][i] = transpose(cofactor(matrix))[j][i] / det; 
@@ -227,7 +231,7 @@ function inverse(matrix){
             return result;   
         }
         else {
-            return "Inverse Matrix can't be singular. Please enter a matrix which has non 0 determinant."
+            return "Please enter a matrix which has non zero determinant";
         }
     }
 }
