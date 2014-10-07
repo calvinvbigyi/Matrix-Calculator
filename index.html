@@ -13,13 +13,15 @@
                 <form method="post" id="matrix_form" action="index.php">
                     <textarea id="input_matrix1" name="input_matrix1"></textarea><br>
                     <textarea id="input_matrix2" name="input_matrix2"></textarea><br>
-                    <input type="checkbox" name="matrix_f" value="det" id="det"> Get the Determinant 
-                    <input type="checkbox" name="matrix_f" value="inv" id="inv"> Get the Inverse Matrix
-                    <input type="checkbox" name="matrix_f" value="add" id="add"> Get the Sum Matrix<br>
-                    <input type="checkbox" name="matrix_f" value="sub" id="sub"> Get the Subtract Matrix<br>
-                    <input type="checkbox" name="matrix_f" value="mul" id="mul"> Get the Multiplication Matrix<br>
-                    <input type="checkbox" name="matrix_f" value="div" id="div"> Get the Division Matrix<br></br>
-                    <input type="submit" name="submit" value="Calculate Now!" id="submit"/>
+                    <div id="boxes">
+                        <input type="checkbox" name="matrix_f" value="det" id="det"> Get the Determinant<br> 
+                        <input type="checkbox" name="matrix_f" value="inv" id="inv"> Get the Inverse Matrix<br>
+                        <input type="checkbox" name="matrix_f" value="add" id="add"> Get the Sum Matrix<br>
+                        <input type="checkbox" name="matrix_f" value="sub" id="sub"> Get the Subtract Matrix<br>
+                        <input type="checkbox" name="matrix_f" value="mul" id="mul"> Get the Multiplication Matrix<br>
+                        <input type="checkbox" name="matrix_f" value="div" id="div"> Get the Division Matrix<br><br>
+                        <input type="submit" name="submit" value="Calculate Now!" id="submit"/>
+                    </div>
                 </form>
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>               
                 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
