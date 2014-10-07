@@ -25,11 +25,37 @@ body p
    padding: 10px;
 }
 
-#result_matrix
+#input_matrix
 {
-    width: 500px;
-    height: 500px;
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
     
+}
+
+#input_matrix2
+{
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    left: 300px;
+    top: 10px;
+}
+
+#det
+{
+    position: absolute;
+    left: 10px;
+    top: 650px;
+}
+
+#inv
+{
+    position: absolute;
+    left: 60px;
+    top: 650px;
 }
 
 footer
