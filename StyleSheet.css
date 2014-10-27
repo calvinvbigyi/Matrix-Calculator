@@ -8,16 +8,23 @@ body
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     color: orange;
     font-size: 3.5em;
-    margin-left: 3.5em;
+    margin-left: 5em;
     padding-bottom: 1.5em;
+}
+body h1 {
+    color: #00FF00;
 }
 body p
 {
     font-size: 0.8em;
     line-height:1.28;
 }
-#input_area {
+#input_areas .input_1{
     display: inline-block;
+}
+#input_areas .input_2{
+    display: inline-block;
+    float: right;
 }
 #wrapper {
     width:  1000px;
@@ -42,15 +49,18 @@ body p
 }
 #boxes {
     position: relative;
-    margin-left: 20em;
+    padding: 15px;
+    margin-left: 15px;
 }
 #sumbit {
     margin-left: 5em;
 }
 #result {
-    width: 300px;
+    width: 900px;
     height: 300px;
-    margin-left: 28em;
+    overflow-x: auto;
+    overflow-y: auto;  
+    margin-left: 1.5em;
 }
 footer {
     font-family: Lucida grande, tahoma,verdana, arial, sans-serif;

@@ -4,10 +4,6 @@
         <meta charset="UTF-8">
         <title>Matrix-Wizard</title>
         <link rel="stylesheet" type="text/css" href="StyleSheet.css" />
-
-        <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     </head>
     <body>
         <div id="wrapper">
@@ -16,16 +12,16 @@
                 <form method="post" id="matrix_form" action="index.php">
                     <div id="input_areas">
                         <div class="input_1">
-                        <h1> First Matrix: </h1>
-                        <div id="matrix_1" class="input">
-                            <textarea id="input_matrix1" name="input_matrix1"></textarea><br>
-                        </div>
+                            <h1> First Matrix: </h1>
+                            <div id="matrix_1" class="input">
+                                <textarea id="input_matrix1" name="input_matrix1"></textarea><br>
+                            </div>
                         </div>
                         <div class="input_2">
-                        <h1> Second Matrix: </h1>
-                        <div id="matrix_2" class="input">
-                            <textarea id="input_matrix2" name="input_matrix2"></textarea><br>
-                        </div>
+                            <h1> Second Matrix: </h1>
+                            <div id="matrix_2" class="input">
+                                <textarea id="input_matrix2" name="input_matrix2"></textarea><br>
+                            </div>
                         </div>
                     </div>       
                     <div id="boxes">
@@ -38,14 +34,12 @@
                         <input type="submit" name="submit" value="Calculate Now!" id="submit"/>
                     </div>
                 </form>
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>               
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
                 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
                 <script src="Matrix.js" ></script>
-                <br></br>
                 <div id="res">
-                    <form id="result_area">
-                        <textarea id="result" name='result'></textarea>
-                    </form>
+                    <h1> Result: </h1>
+                    <textarea id="result" name='result'></textarea>
                 </div>
             </div>
             <footer>

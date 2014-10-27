@@ -2,23 +2,76 @@ $(document).ready(function(){
 
 $("#matrix_form").submit(function(event) {
     event.preventDefault();
-    var matrixString = $("#result_matrix").val();
-    var matrixR = matrixString.split("\n");
+    var matrixString_1 = $("#input_matrix1").val();
+    var matrixString_2 = $("#input_matrix2").val();
+    var matrixR_1 = matrixString_1.split("\n");
+    var matrixR_2 = matrixString_2.split("\n");
     var j = 0;
-    for (var i = 0; i < matrixR.length; i++) {
-        if (matrixR[j] != undefined && matrixR[j] != null) {
-            matrixR[j] = matrixR[j].split(" ");
+    for (var i = 0; i < matrixR_1.length; i++) {
+        if (matrixR_1[j] != undefined && matrixR_1[j] != null) {
+            matrixR_1[j] = matrixR_1[j].split(" ");
             j++;
         }
     }
-    
+    var k = 0;
+    for (var j = 0; j < matrixR_2.length; j++) {
+        if (matrixR_2[k] != undefined && matrixR_2[k] != null) {
+            matrixR_2[k] = matrixR_2[k].split(" ");
+            k++;
+        }
+    }
+
+    if ($("#add").is(":checked")) {
+        var addMatrix = addORSub("+", matrixR_1, matrixR_2);
+        $("#result").append("Matrix Summing Result: \n");
+        for (var i = 0; i < addMatrix.length; i++) {
+            $("#result").append(addMatrix[i] + "\n");
+        }
+    }
+
+    if ($("#sub").is(":checked")) {
+        var subMatrix = addORSub("-", matrixR_1, matrixR_2);
+        $("#result").append("Matrix Subtracting Result: \n");
+        for (var i = 0; i < subMatrix.length; i++) {
+            $("#result").append(subMatrix[i] + "\n");
+        }
+    }
+
+    if ($("#mul").is(":checked")) {
+        var mulMatrix = multiplication(matrixR_1, matrixR_2);
+        $("#result").append("Matrix Multiplication Result: \n");
+        for (var i = 0; i < mulMatrix.length; i++) {
+            $("#result").append(mulMatrix[i] + "\n");
+        }
+    }
+
     if ($("#det").is(":checked")) {
-        $("#res").add("span").text(determinant(matrixR));
+        $("#result").append("First Matrix Result(det): " + determinant(matrixR_1) + "\nSecond Matrix Result(det): " + determinant(matrixR_2)+"\n");
     }
+
     if ($("#inv").is(":checked")) {
-        $("#res").add("span").text(inverse(matrixR));
+        var inverse1 = inverse(matrixR_1);
+        var inverse2 = inverse(matrixR_2);
+        var rowNum1 = inverse1.length;
+        var rowNum2 = inverse2.length;
+        $("#result").append("First Matrix Result(inverse): \n");
+        if (inverse1 instanceof Array) {
+            for (var i = 0; i < rowNum1; i++) {
+                $("#result").append(inverse1[i] + "\n");
+            }
+        } else {
+            $("#result").append("Please enter a matrix which has non zero determinant\n");
+        }
+        $("#result").append("Seconde Matrix Result(inverse): \n");
+        if (inverse2 instanceof Array) {
+            for (var j = 0; j < rowNum2; j++) {
+                $("#result").append(inverse2[j] + "\n");
+            }
+        } else {
+            $("#result").append("Please enter a matrix which has non zero determinant\n");
+        }    
+
     }
-   
 });
 
 
@@ -90,19 +143,28 @@ function addORSub(operation, matrix1, matrix2){
             var col2 = matrix2[0].length;
             if(col1 === col2){
                 for(var i = 0; i < row1; i++){
+                    matrixR[i] = [];
                     for(var j = 0; j < matrix1[i].length; j++){
-                        if(operation === "addition"){
-                            matrixR[i][j] = matrix1[i][j] + matrix2[i][j];
-                        }else if(operation === "substraction"){
-                            matrixR[i][j] = matrix1[i][j] - matrix2[i][j];
+                        if(operation === "+"){
+                            // @Leticia, You have to explictly cast each element of the matrix to float, 
+                            // because each element is considered as a string by js(wild guess). 
+                            matrixR[i][j] = parseFloat(matrix1[i][j]) + parseFloat(matrix2[i][j]);
+                        }else if(operation === "-"){
+                            matrixR[i][j] = parseFloat(matrix1[i][j]) - parseFloat(matrix2[i][j]);
                         }
                     }
                 }
                 return matrixR;
             }
-            return;
+        } else {
+            return "Please make sure two matrices have the same number of rows";
         }
-        return;
+    } else if (!validate(matrix1)) {
+        return MatrixFormatException(matrix1);
+    } else if (!validate(matrix2)) {
+        return MatrixFormatException(matrix2);
+    } else if (!validate(matrix1) && !validate(matrix2)) {
+        return MatrixFormatException(matrix1 + "," + matrix2);
     }
 }
 
@@ -113,12 +175,13 @@ function multiplication(matrix1, matrix2){
         var row1 = matrix1.length;
         var row2 = matrix2.length;
         if(col1 === row2){
-            var matrixR;
+            var matrixR = [];
             for(var i = 0; i < row1; i++){
+                matrixR[i] = [];
                 for(var j = 0; j < col2; j++){
                     for(var k = 0; k < matrix1[i].length; k++){
                         var result = 0;
-                        var partial = matrix1[i][k] * matrix2[k][j];
+                        var partial = parseFloat(matrix1[i][k]) * parseFloat(matrix2[k][j]);
                         result += partial;
                     }
                     matrixR[i][j] = result;
@@ -126,6 +189,12 @@ function multiplication(matrix1, matrix2){
             }
             return matrixR;
         }
+    } else if (!validate(matrix1)) {
+        return MatrixFormatException(matrix1);
+    } else if (!validate(matrix2)) {
+        return MatrixFormatException(matrix2);
+    } else if (!validate(matrix1) && !validate(matrix2)) {
+        return MatrixFormatException(matrix1 + "," + matrix2);
     }
 }
 
@@ -153,6 +222,10 @@ function transpose(matrix){
             }
         }
         return matrixR;
+    } else if (!validate(matrix1)) {
+        return MatrixFormatException(matrix1);
+    } else if (!validate(matrix2)) {
+        return MatrixFormatException(matrix2);
     }
 }
 
@@ -192,8 +265,11 @@ function determinant(matrix){
             }
             return det;
         }  
-
-    }
+    } else if (!validate(matrix1)) {
+        return MatrixFormatException(matrix1);
+    } else if (!validate(matrix2)) {
+        return MatrixFormatException(matrix2);
+    } 
 }
 
 
@@ -222,6 +298,10 @@ function inverse(matrix){
         else {
             return "Please enter a matrix which has non zero determinant";
         }
+    } else if (!validate(matrix1)) {
+        return MatrixFormatException(matrix1);
+    } else if (!validate(matrix2)) {
+        return MatrixFormatException(matrix2);
     }
 }
 
@@ -236,13 +316,15 @@ function cofactor(matrix){
             }
             for(var primary_row = 0; primary_row < row; primary_row++){
                 for(var primary_col = 0; primary_col < col; primary_col++){
-                    console.log(subMatrix(matrix, primary_col, primary_row));
                     result[primary_row][primary_col] = Math.pow(-1, (primary_row + primary_col)) * determinant(subMatrix(matrix, primary_row, primary_col));
                 }
             }
             return result;
         }
-        
+    } else if (!validate(matrix1)) {
+        return MatrixFormatException(matrix1);
+    } else if (!validate(matrix2)) {
+        return MatrixFormatException(matrix2);
     }   
 }
 
