@@ -11,8 +11,20 @@
             <h id="title"> Matrix Calculator </h>
             <div id="content_area">
                 <form method="post" id="matrix_form" action="index.php">
-                    <textarea id="input_matrix1" name="input_matrix1"></textarea><br>
-                    <textarea id="input_matrix2" name="input_matrix2"></textarea><br>
+                    <div id="input_areas">
+                        <div class="input_1">
+                        <h1> First Matrix: </h1>
+                        <div id="matrix_1" class="input">
+                            <textarea id="input_matrix1" name="input_matrix1"></textarea><br>
+                        </div>
+                        </div>
+                        <div class="input_2">
+                        <h1> Second Matrix: </h1>
+                        <div id="matrix_2" class="input">
+                            <textarea id="input_matrix2" name="input_matrix2"></textarea><br>
+                        </div>
+                        </div>
+                    </div>       
                     <div id="boxes">
                         <input type="checkbox" name="matrix_f" value="det" id="det"> Get the Determinant<br> 
                         <input type="checkbox" name="matrix_f" value="inv" id="inv"> Get the Inverse Matrix<br>
