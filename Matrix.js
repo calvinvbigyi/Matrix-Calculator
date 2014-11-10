@@ -24,29 +24,43 @@ $("#matrix_form").submit(function(event) {
     if ($("#add").is(":checked")) {
         var addMatrix = addORSub("+", matrixR_1, matrixR_2);
         $("#result").append("Matrix Summing Result: \n");
-        for (var i = 0; i < addMatrix.length; i++) {
-            $("#result").append(addMatrix[i] + "\n");
-        }
+        if (addMatrix instanceof Array) {
+            for (var i = 0; i < addMatrix.length; i++) {
+                $("#result").append(addMatrix[i] + "\n");
+            }
+        } else {
+            $("#result").append(addMatrix);
+        }     
     }
 
     if ($("#sub").is(":checked")) {
         var subMatrix = addORSub("-", matrixR_1, matrixR_2);
         $("#result").append("Matrix Subtracting Result: \n");
-        for (var i = 0; i < subMatrix.length; i++) {
-            $("#result").append(subMatrix[i] + "\n");
+        if (subMatrix instanceof Array) {
+            for (var i = 0; i < subMatrix.length; i++) {
+                $("#result").append(subMatrix[i] + "\n");
+            }
+        } else {
+            $("#result").append(subMatrix);
         }
     }
 
     if ($("#mul").is(":checked")) {
         var mulMatrix = multiplication(matrixR_1, matrixR_2);
         $("#result").append("Matrix Multiplication Result: \n");
-        for (var i = 0; i < mulMatrix.length; i++) {
-            $("#result").append(mulMatrix[i] + "\n");
-        }
+        if (mulMatrix instanceof Array) {
+            for (var i = 0; i < mulMatrix.length; i++) {
+                $("#result").append(mulMatrix[i] + "\n");
+            }
+        } else {
+            $("#result").append(mulMatrix);
+        } 
     }
 
     if ($("#det").is(":checked")) {
-        $("#result").append("First Matrix Result(det): " + determinant(matrixR_1) + "\nSecond Matrix Result(det): " + determinant(matrixR_2)+"\n");
+        var det1 = determinant(matrixR_1);
+        var det2 = determinant(matrixR_2);
+        $("#result").append("First Matrix Result(det): " + det2 + "\nSecond Matrix Result(det): " + det2+"\n");
     }
 
     if ($("#inv").is(":checked")) {
@@ -73,26 +87,27 @@ $("#matrix_form").submit(function(event) {
 
     }
 });
-
+$("#clear").click(function() {
+    $("#result").empty();
+});
 
 //Validate each matrix by identifying its data type and whether col == row 
 function validate(matrix) {
+    var isValidate = true;
     if (matrix != null) {
         if (matrix instanceof Array) {
             var col = matrix[0].length;
             for (var i = 0; i < col; i++) {
                 if (matrix[i] instanceof Array) {
-                    if (matrix[i].length == col) {
-                        return true;
-                    }
-                    else{
-                        return false;
+                    if (matrix[i].length != col) {
+                        isValidate = false;
                     }
                 }
                 else{
                     throw new MatrixFormatException(matrix);
                 }
             }
+            return isValidate;
         }
         else {
             throw new MatrixFormatException(matrix);
@@ -131,7 +146,7 @@ function identityMatrix(n){
 }
 
 function MatrixFormatException(matrix){
-    return matrix + "does not have a proper matrix format."
+    return matrix + "does not have a proper matrix format. \n"
 }
 
 function addORSub(operation, matrix1, matrix2){
@@ -157,14 +172,14 @@ function addORSub(operation, matrix1, matrix2){
                 return matrixR;
             }
         } else {
-            return "Please make sure two matrices have the same number of rows";
+            return "Please make sure two matrices have the same number of rows. \n";
         }
     } else if (!validate(matrix1)) {
         return MatrixFormatException(matrix1);
     } else if (!validate(matrix2)) {
         return MatrixFormatException(matrix2);
     } else if (!validate(matrix1) && !validate(matrix2)) {
-        return MatrixFormatException(matrix1 + "," + matrix2);
+        return MatrixFormatException(matrix1 + " , " + matrix2);
     }
 }
 
@@ -177,17 +192,20 @@ function multiplication(matrix1, matrix2){
         if(col1 === row2){
             var matrixR = [];
             for(var i = 0; i < row1; i++){
-                matrixR[i] = [];
+                matrixR[i] = new Array(col2); 
                 for(var j = 0; j < col2; j++){
-                    for(var k = 0; k < matrix1[i].length; k++){
-                        var result = 0;
+                    var result = 0;
+                    for(var k = 0; k < col1; k++){
                         var partial = parseFloat(matrix1[i][k]) * parseFloat(matrix2[k][j]);
                         result += partial;
                     }
                     matrixR[i][j] = result;
                 }
+
             }
             return matrixR;
+        } else {
+            return "Sorry the second matrix has to have less or equal rows than first matrix. \n";
         }
     } else if (!validate(matrix1)) {
         return MatrixFormatException(matrix1);
@@ -222,10 +240,8 @@ function transpose(matrix){
             }
         }
         return matrixR;
-    } else if (!validate(matrix1)) {
-        return MatrixFormatException(matrix1);
-    } else if (!validate(matrix2)) {
-        return MatrixFormatException(matrix2);
+    } else if (!validate(matrix)) {
+        return MatrixFormatException(matrix);
     }
 }
 
@@ -265,11 +281,9 @@ function determinant(matrix){
             }
             return det;
         }  
-    } else if (!validate(matrix1)) {
-        return MatrixFormatException(matrix1);
-    } else if (!validate(matrix2)) {
-        return MatrixFormatException(matrix2);
-    } 
+    } else if (!validate(matrix)) {
+        return MatrixFormatException(matrix);
+    }
 }
 
 
@@ -296,12 +310,10 @@ function inverse(matrix){
             return result;   
         }
         else {
-            return "Please enter a matrix which has non zero determinant";
+            return "Please enter a matrix which has non zero determinant. \n";
         }
-    } else if (!validate(matrix1)) {
-        return MatrixFormatException(matrix1);
-    } else if (!validate(matrix2)) {
-        return MatrixFormatException(matrix2);
+    } else if (!validate(matrix)) {
+        return MatrixFormatException(matrix);
     }
 }
 
@@ -321,11 +333,9 @@ function cofactor(matrix){
             }
             return result;
         }
-    } else if (!validate(matrix1)) {
-        return MatrixFormatException(matrix1);
-    } else if (!validate(matrix2)) {
-        return MatrixFormatException(matrix2);
-    }   
+    } else if (!validate(matrix)) {
+        return MatrixFormatException(matrix);
+    }
 }
 
 function subMatrix(matrix, primary_col, primary_row) {
